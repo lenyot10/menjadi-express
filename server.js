@@ -18,6 +18,13 @@ const PersonModel = Mongoose.model("person",{
 app.post('/Profile/create' , async(req, res)=>{
     //do something here
     console.log(req.body)
+    if(!req.body.firstname){
+        res.status(400).json({
+            statusCode :400,
+            error : "firstname parameter is required",
+            message : "firstname parameter is required"
+        });
+    }
     const insert = {
         firstname : req.body.firstname,
         lastname  : req.body.lastname
@@ -77,12 +84,20 @@ app.put('/Profile/update/(:id)',async(req,res) =>{
     res.status(statusCode).json(response);
 })
 
-//delete data profile menggunakan method 
+//delete data profile menggunakan method  get
 //url http://localhost:3000/Profile/delete/idmongo
 app.get('/Profile/delete/(:id)',async(req,res) =>{
+    const checkId = Mongoose.Types.ObjectId.isValid(req.params.id)
+    //check dataobject id valid jika valid lakukan eksekusi delete
     let statusCode = 200
     let message = "Delete Person"
+    if(checkId){
     var person =await PersonModel.findByIdAndDelete(req.params.id).exec();
+    }else{
+        statusCode = 404
+        message = "Object Id invalid"
+        var person = null
+    }
     const response = {
         statusCode : statusCode,
         error : message ,
