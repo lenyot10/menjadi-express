@@ -8,6 +8,11 @@ app.use(bodyParser.urlencoded({extended:true})); //menangkap type request dalam 
 
 app.use(bodyParser.json());//menangkap url dalam bentuk json
 
+const Mongoose = require('./MongoModel/mongoConfig')
+const PersonModel = Mongoose.Model("person",{
+    firstname : String,//field firstname
+    lastname : String // field lastname
+}) // cmt -m memanggil MongoConfig dan Membuat Model PersonModel sebagai penampung collection person
 app.get('/',(req, res) => res.send('Hello word-'))
 
 //membuat request post
