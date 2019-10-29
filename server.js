@@ -31,7 +31,6 @@ app.post('/Profile/create' , async(req, res)=>{
         content : result
     }
     res.json(respon);
-
 })
 
 //menampilkan semua data
@@ -68,7 +67,7 @@ app.get('/Profile/detail/(:id)',async(req,res) =>{
 app.put('/Profile/update/(:id)',async(req,res) =>{
     let statusCode = 200
     let message = "Update Person"
-    var person =await PersonModel.findByIdAndUpdate(req.params.id,req.body,{new : true});
+    var person =await PersonModel.findByIdAndUpdate(req.params.id,req.body,{new : true}).exec();
     const response = {
         statusCode : statusCode,
         error : message ,
@@ -77,6 +76,22 @@ app.put('/Profile/update/(:id)',async(req,res) =>{
     }
     res.status(statusCode).json(response);
 })
+
+//delete data profile menggunakan method 
+//url http://localhost:3000/Profile/delete/idmongo
+app.get('/Profile/delete/(:id)',async(req,res) =>{
+    let statusCode = 200
+    let message = "Delete Person"
+    var person =await PersonModel.findByIdAndDelete(req.params.id).exec();
+    const response = {
+        statusCode : statusCode,
+        error : message ,
+        message : message ,
+        content : person
+    }
+    res.status(statusCode).json(response);
+})
+
 
 
  app.get('/',(req, res) => res.send('Hello word-'))
