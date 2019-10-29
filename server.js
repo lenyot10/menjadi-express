@@ -46,6 +46,22 @@ app.get('/Profile/list',async (req , res) => {
     }
     res.json(response);
 })
+
+//detail data method get
+//http://localhost:3000/Profile/detail/idmongo
+app.get('/Profile/detail/(:id)',async(req,res) =>{
+    let statusCode = 200
+    let message = "Detail Person"
+    var person =await PersonModel.findById(req.params.id).exec();
+    const response = {
+        statusCode : 200,
+        error : message ,
+        message : message ,
+        content : person
+    }
+    res.status(statusCode).json(response);
+})
+
  app.get('/',(req, res) => res.send('Hello word-'))
 
 //membuat request post
