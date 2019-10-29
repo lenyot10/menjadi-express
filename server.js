@@ -14,6 +14,7 @@ const PersonModel = Mongoose.model("person",{
     lastname : String // field lastname
 }) // cmt -m memanggil MongoConfig dan Membuat Model PersonModel sebagai penampung collection person
 
+//create person
 app.post('/Profile/create' , async(req, res)=>{
     //do something here
     console.log(req.body)
@@ -31,7 +32,20 @@ app.post('/Profile/create' , async(req, res)=>{
     }
     res.json(respon);
 
-})//create person
+})
+
+//menampilkan semua data
+//url http://localhost:3000/Profile/lis
+app.get('/Profile/list',async (req , res) => {
+    var person =await PersonModel.find().exec();
+    const response = {
+        statusCode : 200,
+        error : "",
+        message : "List Person",
+        content : person
+    }
+    res.json(response);
+})
  app.get('/',(req, res) => res.send('Hello word-'))
 
 //membuat request post
