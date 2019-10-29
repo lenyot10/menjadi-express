@@ -31,7 +31,7 @@ app.post('/Profile/create' , async(req, res)=>{
     }
     res.json(respon);
 
-})
+})//create person
  app.get('/',(req, res) => res.send('Hello word-'))
 
 //membuat request post
